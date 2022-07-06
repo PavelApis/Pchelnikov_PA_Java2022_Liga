@@ -3,16 +3,13 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
-
-import java.util.function.Function;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 
 @AllArgsConstructor
-public class ChangeTaskStatus implements Function<String[], String> {
-    @Autowired
-    private final Users users;
+public class ChangeTaskStatus extends Command {
     @Autowired
     private final Tasks tasks;
 
@@ -21,8 +18,8 @@ public class ChangeTaskStatus implements Function<String[], String> {
         wrongChangeStatusCommandSize(command);
         int id;
         Status newStatus;
-        id = Readers.readId(command[1]);
-        newStatus = Readers.readStatus(command[2]);
+        id = ReadersUtils.readId(command[1]);
+        newStatus = ReadersUtils.readStatus(command[2]);
         tasks.checkTaskId(id);
         tasks.get(id).setStatus(newStatus);
         return "Статус задания с id: " + id +  " успешно изменен на " + newStatus + ".";

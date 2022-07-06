@@ -1,8 +1,6 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
-import java.util.function.Function;
-
-public class InfoCommand implements Function<String[], String> {
+public class InfoCommand extends Command {
     @Override
     public String apply(String[] strings) {
         return " <pre> Сервер отвечает на GET запросы пользователя.\n" +

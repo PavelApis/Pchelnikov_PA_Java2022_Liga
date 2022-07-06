@@ -2,15 +2,14 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.function.Function;
 
 @AllArgsConstructor
-public class SaveCommand implements Function<String[], String> {
+public class SaveCommand extends Command {
     @Autowired
     private final Users users;
     @Autowired

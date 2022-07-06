@@ -4,13 +4,14 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.*;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 import java.util.Date;
-import java.util.Scanner;
-import java.util.function.Function;
 
 @AllArgsConstructor
-public class EditTaskCommand implements Function<String[], String> {
+public class EditTaskCommand extends Command {
     @Autowired
     private final Users users;
     @Autowired
@@ -20,7 +21,7 @@ public class EditTaskCommand implements Function<String[], String> {
     @Override
     public String apply(String[] command) {
         checkCommandSize(command);
-        int id = Readers.readId(command[1]);
+        int id = ReadersUtils.readId(command[1]);
         tasks.checkTaskId(id);
         Task task = tasks.get(id);
         String oldTask = task.toString();
@@ -28,10 +29,10 @@ public class EditTaskCommand implements Function<String[], String> {
 
         String title = command[2];
         String description = command[3];
-        int userId = Readers.readId(command[4]);
+        int userId = ReadersUtils.readId(command[4]);
         users.checkUserId(userId);
-        Date deadline = Readers.readDeadline(command[5]);
-        Status status = Readers.readStatus(command[6]);
+        Date deadline = ReadersUtils.readDeadline(command[5]);
+        Status status = ReadersUtils.readStatus(command[6]);
 
         task.setTitle(title);
         task.setDescription(description);

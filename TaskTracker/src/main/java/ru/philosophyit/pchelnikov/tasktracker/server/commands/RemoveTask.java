@@ -1,21 +1,23 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Task;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
-
-import java.util.function.Function;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 @AllArgsConstructor
-public class RemoveTask implements Function<String[], String> {
+public class RemoveTask extends Command {
+    @Autowired
     private final Users users;
+    @Autowired
     private final Tasks tasks;
 
     @Override
     public String apply(String[] command) {
         checkCommandSize(command);
-        int id = Readers.readId(command[1]);
+        int id = ReadersUtils.readId(command[1]);
         tasks.checkTaskId(id);
         Task task = tasks.get(id);
         tasks.getTaskMap().remove(id);

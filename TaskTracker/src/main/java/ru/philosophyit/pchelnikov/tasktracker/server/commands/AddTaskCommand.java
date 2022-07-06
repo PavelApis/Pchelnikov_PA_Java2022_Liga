@@ -5,15 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Task;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 import java.util.Date;
-import java.util.function.Function;
 
 @AllArgsConstructor
 @Component
-public class AddTaskCommand implements Function<String[], String> {
+public class AddTaskCommand extends Command {
     @Autowired
     Users users;
     @Autowired
@@ -23,12 +23,12 @@ public class AddTaskCommand implements Function<String[], String> {
     public String apply(String[] command) {
         checkCommandSize(command);
 
-        int id = Readers.readId(command[1]);
+        int id = ReadersUtils.readId(command[1]);
         String title = command[2];
         String description = command[3];
-        int userId = Readers.readId(command[4]);
-        Date deadline = Readers.readDeadline(command[5]);
-        Status status = Readers.readStatus(command[6]);
+        int userId = ReadersUtils.readId(command[4]);
+        Date deadline = ReadersUtils.readDeadline(command[5]);
+        Status status = ReadersUtils.readStatus(command[6]);
 
         if (tasks.getTaskMap().containsKey(id)) {
             throw new RuntimeException("В комманде указан повторяющийся id задания.");

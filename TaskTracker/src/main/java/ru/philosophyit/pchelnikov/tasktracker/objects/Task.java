@@ -8,26 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @AllArgsConstructor
+@Getter
+@Setter
 public class Task {
-    @Getter
-    @Setter
     private int id;
-    @Getter
-    @Setter
     private String title;
-    @Getter
-    @Setter
     private String description;
-    @Getter
-    @Setter
     private int userId;
-
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    @Getter
-    @Setter
     private Date deadline;
-    @Getter
-    @Setter
     private Status status;
 
     public Task(int id, String title, String definition, int userId, Date deadline) {

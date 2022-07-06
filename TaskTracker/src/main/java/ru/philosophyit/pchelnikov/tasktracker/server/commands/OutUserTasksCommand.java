@@ -3,25 +3,21 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
-
-import java.util.function.Function;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 @AllArgsConstructor
-public class OutUserTasksCommand implements Function<String[], String> {
+public class OutUserTasksCommand extends Command {
 
     @Autowired
     private final Users users;
-    @Autowired
-    private final Tasks tasks;
 
     private String filteredUserTasks(String[] command) {
         int id;
         Status status;
         checkFlag(command[1]);
-        id = Readers.readId(command[2]);
-        status = Readers.readStatus(command[3]);
+        id = ReadersUtils.readId(command[2]);
+        status = ReadersUtils.readStatus(command[3]);
         users.checkUserId(id);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<pre>");
@@ -31,7 +27,7 @@ public class OutUserTasksCommand implements Function<String[], String> {
     }
 
     private String allUserTasks(String[] command) {
-        int id = Readers.readId(command[1]);
+        int id = ReadersUtils.readId(command[1]);
         StringBuilder stringBuilder = new StringBuilder();
         users.checkUserId(id);
         stringBuilder.append("<pre>");

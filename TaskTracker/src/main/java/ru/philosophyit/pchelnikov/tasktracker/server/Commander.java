@@ -2,16 +2,15 @@ package ru.philosophyit.pchelnikov.tasktracker.server;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
 import ru.philosophyit.pchelnikov.tasktracker.server.commands.*;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
 import java.util.Map;
-import java.util.function.Function;
 
 @Component
 public class Commander {
-    Map<String, Function<String[], String>> commands;
+    Map<String, Command> commands;
     @Autowired
     Users users;
     @Autowired
@@ -22,8 +21,8 @@ public class Commander {
         this.tasks = tasks;
 
         commands = Map.of(
-                "change-status", new ChangeTaskStatus(users, tasks),
-                "out-user-tasks", new OutUserTasksCommand(users, tasks),
+                "change-status", new ChangeTaskStatus(tasks),
+                "out-user-tasks", new OutUserTasksCommand(users),
                 "add-task", new AddTaskCommand(users, tasks),
                 "edit-task", new EditTaskCommand(users, tasks),
                 "remove-task", new RemoveTask(users, tasks),

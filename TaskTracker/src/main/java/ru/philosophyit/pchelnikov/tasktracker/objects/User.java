@@ -5,12 +5,10 @@ import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 public class User {
-    @Getter
     private final int id;
-    @Getter
     private final String name;
-    @Getter
     private final Set<Task> tasks;
 
     public User(int id, String name) {
