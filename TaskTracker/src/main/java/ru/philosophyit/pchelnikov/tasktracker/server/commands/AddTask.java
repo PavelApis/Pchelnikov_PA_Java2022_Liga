@@ -11,7 +11,7 @@ import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
 @AllArgsConstructor
 @Component
-public class AddTaskCommand extends Command {
+public class AddTask extends Strategy {
     @Autowired
     Users users;
     @Autowired

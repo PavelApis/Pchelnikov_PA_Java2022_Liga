@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.*;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
-import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
-
-import java.util.Date;
 
 @AllArgsConstructor
-public class EditTaskCommand extends Command {
+public class EditTask extends Strategy {
     @Autowired
     private final Users users;
     @Autowired

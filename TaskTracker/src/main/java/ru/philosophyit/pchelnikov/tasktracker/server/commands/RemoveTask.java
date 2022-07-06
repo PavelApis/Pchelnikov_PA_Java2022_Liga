@@ -8,7 +8,7 @@ import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 @AllArgsConstructor
-public class RemoveTask extends Command {
+public class RemoveTask extends Strategy {
     @Autowired
     private final Users users;
     @Autowired

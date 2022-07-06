@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 
 @AllArgsConstructor
-public class ChangeTaskStatus extends Command {
+public class ChangeTaskStatus extends Strategy {
     @Autowired
     private final Tasks tasks;
 

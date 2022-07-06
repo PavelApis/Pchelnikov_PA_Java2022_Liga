@@ -1,20 +1,16 @@
 package ru.philosophyit.pchelnikov.tasktracker.server;
 
-import com.opencsv.CSVParser;
-import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.server.commands.*;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.Map;
 
 @Component
 public class Commander {
-    Map<String, Command> commands;
+    Map<Strategies, Strategy> strategyMap;
     @Autowired
     Users users;
     @Autowired
@@ -24,23 +20,28 @@ public class Commander {
         this.users = users;
         this.tasks = tasks;
 
-        commands = Map.of(
-                "change-status", new ChangeTaskStatus(tasks),
-                "out-user-tasks", new OutUserTasksCommand(users),
-                "add-task", new AddTaskCommand(users, tasks),
-                "edit-task", new EditTaskCommand(users, tasks),
-                "remove-task", new RemoveTask(users, tasks),
-                "save", new SaveCommand(users, tasks),
-                "clear", new ClearCommand(users, tasks),
-                "info", new InfoCommand()
+        strategyMap = Map.of(
+                Strategies.change_status, new ChangeTaskStatus(tasks),
+                Strategies.out_user_tasks, new OutUserTasks(users),
+                Strategies.add_task, new AddTask(users, tasks),
+                Strategies.edit_task, new EditTask(users, tasks),
+                Strategies.remove_task, new RemoveTask(users, tasks),
+                Strategies.save, new Save(users, tasks),
+                Strategies.clear, new Clear(users, tasks),
+                Strategies.info, new Info()
         );
     }
 
     public String acceptCommand(String[] command) {
-        if (commands.containsKey(command[0])) {
-            return commands.get(command[0]).apply(command);
-        } else {
-            return "Неопознанная команда. Введите команду info, чтобы узнать какие команды доступны.";
+        try {
+            Strategies strategy = Strategies.valueOf(command[0]);
+            if (strategyMap.containsKey(strategy)) {
+                return strategyMap.get(strategy).apply(command);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Неопознанная команда. Введите команду info, чтобы узнать какие команды доступны.");
         }
     }
 }

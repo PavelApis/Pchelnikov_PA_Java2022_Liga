@@ -37,11 +37,7 @@ public class CommandsController {
 
     @GetMapping
     public @ResponseBody String acceptCommand(@RequestParam("command") String commandLine) {
-        try {
-            return executor.execute(commandLine);
-        } catch (Exception e) {
-            return e.getMessage() + " Команда не выполнена.";
-        }
+        return executor.execute(commandLine);
     }
 
 //    @GetMapping("/add-task")

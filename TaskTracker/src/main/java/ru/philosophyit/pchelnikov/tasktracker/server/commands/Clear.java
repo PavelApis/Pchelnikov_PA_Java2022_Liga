@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 @AllArgsConstructor
-public class ClearCommand extends Command {
+public class Clear extends Strategy {
 
     @Autowired
     private final Users users;

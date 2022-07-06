@@ -10,7 +10,12 @@ import org.springframework.stereotype.Component;
 public class Executor {
     @Autowired
     private final Commander commander;
-    public String execute(String argumentsLine){
-        return commander.acceptCommand(CommandArgumentsFactory.makeCommandArguments(argumentsLine));
+
+    public String execute(String argumentsLine) {
+        try {
+            return commander.acceptCommand(CommandArgumentsFactory.makeCommandArguments(argumentsLine));
+        } catch (Exception e) {
+            return e.getMessage() + " Команда не выполнена.";
+        }
     }
 }
