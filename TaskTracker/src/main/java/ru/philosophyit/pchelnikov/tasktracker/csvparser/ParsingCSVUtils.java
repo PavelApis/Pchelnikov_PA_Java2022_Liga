@@ -1,20 +1,23 @@
-import au.com.bytecode.opencsv.CSVReader;
+package ru.philosophyit.pchelnikov.tasktracker.csvparser;
+
+import com.opencsv.CSVReader;
+import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
+import ru.philosophyit.pchelnikov.tasktracker.objects.Task;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 public class ParsingCSVUtils {
-    public static List<String[]> readCSV(Path pathToCSV) {
+    public static List<String[]> readCSV(String fileName) {
         try {
-            CSVReader reader = new CSVReader(new FileReader(pathToCSV.toString()), ',', '"');
+            CSVReader reader = new CSVReader(new FileReader(fileName), ',', '"');
             return reader.readAll();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("CSV файл не обнаружен в требуемой директории: " + pathToCSV);
+            throw new RuntimeException("CSV файл не обнаружен в требуемой директории: " + fileName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +31,7 @@ public class ParsingCSVUtils {
         }
     }
 
-    public static int readUserIdFormCSVLine(int numberOfLine, String data) {
+    public static int readUserIdFromCSVLine(int numberOfLine, String data) {
         try {
             return Integer.parseInt(data);
         } catch (NumberFormatException e) {
@@ -44,9 +47,33 @@ public class ParsingCSVUtils {
         }
     }
 
+    public static Status readStatus(int numberOfLine, String data) {
+        switch (data.toLowerCase()) {
+            case "new" -> {
+                return Status.NEW;
+            }
+            case "in_work" -> {
+                return Status.IN_WORK;
+            }
+            case "done" -> {
+                return Status.DONE;
+            }
+            default -> {
+                throw new RuntimeException("Неверный формат статуса в строке номер " + numberOfLine +
+                        ", статус может быть лишь: new, in_work, done.");
+            }
+        }
+    }
 
-    public static void checkCSVLineSize(int number, String[] line, int size) {
-        if (line.length != size) {
+
+    public static void checkTaskCSVLineSize(int number, String[] line) {
+        if (line.length != 5 && line.length != 6) {
+            throw new RuntimeException("Данные в строке номер " + number + " в файле задач имеют неправильный формат.");
+        }
+    }
+
+    public static void checkUserCSVLineSize(int number, String[] line){
+        if (line.length != 2) {
             throw new RuntimeException("Данные в строке номер " + number + " в файле задач имеют неправильный формат.");
         }
     }
