@@ -21,28 +21,25 @@ public class EditTaskCommand extends Command {
     @Override
     public String apply(String[] command) {
         checkCommandSize(command);
-        int id = ReadersUtils.readId(command[1]);
-        tasks.checkTaskId(id);
-        Task task = tasks.get(id);
-        String oldTask = task.toString();
-        User oldUser = users.get(task.getUserId());
 
-        String title = command[2];
-        String description = command[3];
-        int userId = ReadersUtils.readId(command[4]);
-        users.checkUserId(userId);
-        Date deadline = ReadersUtils.readDeadline(command[5]);
-        Status status = ReadersUtils.readStatus(command[6]);
+        Task newTask = TaskBuilder.builder()
+                .id(command[1])
+                .title(command[2])
+                .description(command[3])
+                .userId(command[4])
+                .deadline(command[5])
+                .status(command[6])
+                .build();
 
-        task.setTitle(title);
-        task.setDescription(description);
-        task.setStatus(status);
-        task.setDeadline(deadline);
-        task.setUserId(userId);
+        tasks.checkTaskId(newTask.getId());
+        Task oldTask = tasks.get(newTask.getId());
+        tasks.getTaskMap().remove(oldTask.getId());
+        tasks.getTaskMap().put(newTask.getId(), newTask);
 
-        oldUser.getTasks().remove(task);
-        users.get(userId).getTasks().add(task);
-        return "Задание: {" + oldTask + "} успешно изменено на: {" + task + "}.";
+        users.getUserMap().get(oldTask.getUserId()).getTasks().remove(oldTask);
+        users.getUserMap().get(newTask.getUserId()).getTasks().add(newTask);
+
+        return "Задание: {" + oldTask + "} успешно изменено на: {" + newTask + "}.";
     }
 
     public void checkCommandSize(String[] command) {
