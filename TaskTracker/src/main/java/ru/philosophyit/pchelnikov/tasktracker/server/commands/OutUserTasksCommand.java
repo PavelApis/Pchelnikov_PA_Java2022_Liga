@@ -37,8 +37,8 @@ public class OutUserTasksCommand extends Command {
     }
 
     private void checkFlag(String flag) {
-        if (!flag.equals("-filter")) {
-            throw new RuntimeException("Неверный формат флага, флаг должен иметь вид: -filter");
+        if (!flag.equals("filter")) {
+            throw new RuntimeException("Неверный формат флага, флаг должен иметь вид: filter");
         }
     }
 

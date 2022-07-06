@@ -13,8 +13,7 @@ import java.util.List;
 
 public class ParsingCSVUtils {
     public static List<String[]> readCSV(String fileName) {
-        try {
-            CSVReader reader = new CSVReader(new FileReader(fileName), ',', '"');
+        try (CSVReader reader = new CSVReader(new FileReader(fileName), ',', '"')) {
             return reader.readAll();
         } catch (FileNotFoundException e) {
             throw new RuntimeException("CSV файл не обнаружен в требуемой директории: " + fileName);
