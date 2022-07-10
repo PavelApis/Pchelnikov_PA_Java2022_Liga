@@ -19,10 +19,9 @@ public class Tasks {
     public static final Path pathToTasks = FileSystems.getDefault().getPath("src", "main", "resources", "tasks.csv");
     @Getter
     Map<Integer, Task> taskMap;
-    @Autowired
     private final Users users;
 
-    public Tasks(Users users) {
+    public Tasks(@Autowired Users users) {
         this.users = users;
         var tasks = new HashMap<Integer, Task>();
         List<String[]> csvLines = ParsingCSVUtils.readCSV(pathToTasks.toString());

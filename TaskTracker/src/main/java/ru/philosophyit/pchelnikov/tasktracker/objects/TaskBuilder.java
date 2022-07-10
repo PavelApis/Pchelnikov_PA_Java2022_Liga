@@ -22,7 +22,7 @@ public class TaskBuilder {
 
     public TaskBuilder id(String idString){
         if(this.id != null){
-            throw new IllegalStateException("В TaskBuilder уже задан id");
+            throw new IllegalStateException("В TaskBuilder уже задан id.");
         }
         int id = ReadersUtils.readId(idString);
         this.id = id;
@@ -31,7 +31,7 @@ public class TaskBuilder {
 
     public TaskBuilder title(String title){
         if(this.title != null){
-            throw new IllegalStateException("В TaskBuilder уже задан title");
+            throw new IllegalStateException("В TaskBuilder уже задан title.");
         }
         this.title = title;
         return this;
@@ -39,7 +39,7 @@ public class TaskBuilder {
 
     public TaskBuilder description(String description){
         if(this.description != null){
-            throw new IllegalStateException("В TaskBuilder уже задан description");
+            throw new IllegalStateException("В TaskBuilder уже задан description.");
         }
         this.description = description;
         return this;
@@ -47,19 +47,24 @@ public class TaskBuilder {
 
     public TaskBuilder userId(String userIdString){
         if(this.userId != null){
-            throw new IllegalStateException("В TaskBuilder уже задан userId");
+            throw new IllegalStateException("В TaskBuilder уже задан userId.");
         }
-        int userId = ReadersUtils.readId(userIdString);
-        this.userId = userId;
+        this.userId = ReadersUtils.readId(userIdString);
         return this;
     }
 
     public TaskBuilder deadline(String deadlineString){
+        if(this.deadline != null) {
+            throw new IllegalStateException("В TaskBuilder уже задан deadline.");
+        }
         this.deadline = ReadersUtils.readDeadline(deadlineString);
         return this;
     }
 
     public TaskBuilder status(String statusString){
+        if(this.status != null){
+            throw new IllegalStateException("В TaskBuilder уже задан status.");
+        }
         this.status = ReadersUtils.readStatus(statusString);
         return this;
     }

@@ -2,11 +2,13 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 @AllArgsConstructor
+@Component
 public class OutUserTasks extends Strategy {
 
     @Autowired
@@ -49,7 +51,7 @@ public class OutUserTasks extends Strategy {
         } else if (command.length == 4) {
             return filteredUserTasks(command);
         } else {
-            return "Неверный формат команды sout-user-tasks";
+            throw new RuntimeException("Неверный формат команды out_user_tasks.");
         }
     }
 }

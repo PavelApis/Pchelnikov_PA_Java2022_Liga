@@ -11,12 +11,10 @@ import java.util.Map;
 @Component
 public class Commander {
     Map<Strategies, Strategy> strategyMap;
-    @Autowired
     Users users;
-    @Autowired
     Tasks tasks;
 
-    public Commander(Users users, Tasks tasks) {
+    public Commander(@Autowired Users users, @Autowired Tasks tasks) {
         this.users = users;
         this.tasks = tasks;
 

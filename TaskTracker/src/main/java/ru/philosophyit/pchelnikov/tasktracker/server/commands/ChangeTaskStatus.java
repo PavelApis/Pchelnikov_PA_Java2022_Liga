@@ -2,12 +2,14 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
 
 @AllArgsConstructor
+@Component
 public class ChangeTaskStatus extends Strategy {
     @Autowired
     private final Tasks tasks;
@@ -26,7 +28,8 @@ public class ChangeTaskStatus extends Strategy {
 
     private void wrongChangeStatusCommandSize(String[] command) {
         if (command.length != 3) {
-            throw new RuntimeException("Неверный формат запроса изменения статуса, команда должна иметь формат: /task-tracker?command=change-status [TASK_ID] [STATUS]");
+            throw new RuntimeException("Неверный формат запроса изменения статуса, команда должна иметь формат:" +
+                    " /task_tracker?command=change_status,[TASK_ID],[STATUS]");
         }
     }
 }

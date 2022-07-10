@@ -2,6 +2,7 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
@@ -9,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 @AllArgsConstructor
+@Component
 public class Save extends Strategy {
     @Autowired
     private final Users users;

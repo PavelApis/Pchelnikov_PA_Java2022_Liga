@@ -3,11 +3,13 @@ package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.*;
 import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
 @AllArgsConstructor
+@Component
 public class EditTask extends Strategy {
     @Autowired
     private final Users users;
@@ -33,16 +35,19 @@ public class EditTask extends Strategy {
         tasks.getTaskMap().remove(oldTask.getId());
         tasks.getTaskMap().put(newTask.getId(), newTask);
 
-        users.getUserMap().get(oldTask.getUserId()).getTasks().remove(oldTask);
-        users.getUserMap().get(newTask.getUserId()).getTasks().add(newTask);
-
-        return "Задание: {" + oldTask + "} успешно изменено на: {" + newTask + "}.";
+        try {
+            users.getUserMap().get(oldTask.getUserId()).getTasks().remove(oldTask);
+            users.getUserMap().get(newTask.getUserId()).getTasks().add(newTask);
+            return "Задание: {" + oldTask + "} успешно изменено на: {" + newTask + "}.";
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Пользователя с userId не существует.");
+        }
     }
 
     public void checkCommandSize(String[] command) {
         if (command.length != 7) {
-            throw new RuntimeException("Неверный формат команды редактирования задачи, ожидаеммый формат: " +
-                    "/task-tracker/edit-task?id=[TASK_ID]&title=[TITLE]&description=[DESCRIPTION]&user_id=[USER_ID]&deadline=[DEADLINE]&status=[STATUS]");
+            throw new RuntimeException("Неверный формат запроса редактирования задачи, ожидаеммый формат: " +
+                    "/task-tracker?command=edit_task,[TASK_ID],[TITLE],[DESCRIPTION],[USER_ID],[DEADLINE],[STATUS].");
         }
     }
 }

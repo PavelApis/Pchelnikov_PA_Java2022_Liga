@@ -1,5 +1,8 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Info extends Strategy {
     @Override
     public String apply(String[] strings) {

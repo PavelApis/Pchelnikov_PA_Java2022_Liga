@@ -47,7 +47,7 @@ public class AddTask extends Strategy {
     private void checkCommandSize(String[] command) {
         if (command.length != 7) {
             throw new RuntimeException("Неверный формат запроса добавления задачи, ожидаеммый формат: " +
-                    "/task-tracker/add-task?id=[TASK_ID]&title=[TITLE]&description=[DESCRIPTION]&user_id=[USER_ID]&deadline=[DEADLINE]&status=[STATUS].");
+                    "/task-tracker?command=add_task,[TASK_ID],[TITLE],[DESCRIPTION],[USER_ID],[DEADLINE],[STATUS].");
         }
     }
 }
