@@ -1,24 +1,21 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
+import org.springframework.stereotype.Component;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.function.Function;
 
-@AllArgsConstructor
-public class ClearCommand implements Function<String[], String> {
-
-    @Autowired
-    private final Users users;
-    @Autowired
-    private final Tasks tasks;
+@NoArgsConstructor
+@Component
+public class Clear implements Strategy {
 
     @Override
-    public String apply(String[] strings) {
+    public String apply(String[] arguments, Users users, Tasks tasks) {
         users.getUserMap().clear();
         tasks.getTaskMap().clear();
         try {

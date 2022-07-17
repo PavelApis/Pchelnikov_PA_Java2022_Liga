@@ -1,21 +1,21 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Task;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Tasks;
-import ru.philosophyit.pchelnikov.tasktracker.objects.Users;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
 
-import java.util.function.Function;
-
-@AllArgsConstructor
-public class RemoveTask implements Function<String[], String> {
-    private final Users users;
-    private final Tasks tasks;
-
+@NoArgsConstructor
+@Component
+public class RemoveTask implements Strategy {
     @Override
-    public String apply(String[] command) {
+    public String apply(String[] command, Users users, Tasks tasks) {
         checkCommandSize(command);
-        int id = Readers.readId(command[1]);
+        int id = ReadersUtils.readId(command[1]);
         tasks.checkTaskId(id);
         Task task = tasks.get(id);
         tasks.getTaskMap().remove(id);
@@ -25,7 +25,8 @@ public class RemoveTask implements Function<String[], String> {
 
     public void checkCommandSize(String[] command) {
         if (command.length != 2) {
-            throw new RuntimeException("Неверный формат команды удаления задания, ожидаемый формат: remove-task [TASK_ID]");
+            throw new RuntimeException("Неверный формат запроса удаления задания, ожидаемый формат:" +
+                    "/task-tracker?strategy="+StrategyEnum.OUT_USER_TASKS+",[TASK_ID]");
         }
     }
 }

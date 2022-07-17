@@ -1,9 +1,11 @@
-package ru.philosophyit.pchelnikov.tasktracker.objects;
+package ru.philosophyit.pchelnikov.tasktracker.services;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.philosophyit.pchelnikov.tasktracker.csvparser.ParsingCSVUtils;
+import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
+import ru.philosophyit.pchelnikov.tasktracker.objects.Task;
+import ru.philosophyit.pchelnikov.tasktracker.utils.ParsingCSVUtils;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
