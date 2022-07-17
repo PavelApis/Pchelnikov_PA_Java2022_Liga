@@ -1,7 +1,8 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
-import java.util.function.Function;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
+import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 
-public abstract class Strategy implements Function<String[], String> {
-
+public interface Strategy{
+    public String apply(String[] arguments, Users users, Tasks tasks);
 }

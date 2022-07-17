@@ -1,18 +1,20 @@
 package ru.philosophyit.pchelnikov.tasktracker.server.commands;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.philosophyit.pchelnikov.tasktracker.objects.Status;
+import ru.philosophyit.pchelnikov.tasktracker.services.Tasks;
 import ru.philosophyit.pchelnikov.tasktracker.services.Users;
 import ru.philosophyit.pchelnikov.tasktracker.utils.ReadersUtils;
+import ru.philosophyit.pchelnikov.tasktracker.utils.StringConstants;
 
-@AllArgsConstructor
-public class OutUserTasks extends Strategy {
+@NoArgsConstructor
+@Component
+public class OutUserTasks implements Strategy {
 
-    @Autowired
-    private final Users users;
-
-    private String filteredUserTasks(String[] command) {
+    private String filteredUserTasks(String[] command, Users users) {
         int id;
         Status status;
         checkFlag(command[1]);
@@ -26,7 +28,7 @@ public class OutUserTasks extends Strategy {
         return stringBuilder.toString();
     }
 
-    private String allUserTasks(String[] command) {
+    private String allUserTasks(String[] command, Users users) {
         int id = ReadersUtils.readId(command[1]);
         StringBuilder stringBuilder = new StringBuilder();
         users.checkUserId(id);
@@ -43,13 +45,13 @@ public class OutUserTasks extends Strategy {
     }
 
     @Override
-    public String apply(String[] command) {
+    public String apply(String[] command, Users users, Tasks tasks) {
         if (command.length == 2) {
-            return allUserTasks(command);
+            return allUserTasks(command, users);
         } else if (command.length == 4) {
-            return filteredUserTasks(command);
+            return filteredUserTasks(command, users);
         } else {
-            return "Неверный формат команды sout-user-tasks";
+            return "Неверный формат запроса " + StringConstants.REQUEST_MAPPING + StrategyEnum.OUT_USER_TASKS;
         }
     }
 }
